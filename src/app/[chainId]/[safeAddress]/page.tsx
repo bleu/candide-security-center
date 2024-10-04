@@ -10,8 +10,6 @@ export default function Page() {
     listGuardians().then((listedGuardian) => setGuardians(listedGuardian));
   }, [listGuardians]);
 
-  console.log(process.env.JSON_RPC_NODE_PROVIDER);
-
   const [guardianInput, setGuardianInput] = useState("");
 
   const handleVerifyGuardian = async () => {
