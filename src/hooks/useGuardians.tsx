@@ -2,11 +2,12 @@ import { SocialRecoveryModule } from "abstractionkit";
 
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { useCallback } from "react";
+import { useClient } from "wagmi";
 
-const jsonRpcNodeProvider = process.env.JSON_RPC_NODE_PROVIDER as string;
 
 export const useHandleGuardian = () => {
   const { sdk, safe } = useSafeAppsSDK();
+  const client = useClient();
 
   const addGuardian = useCallback(
     async ({
@@ -51,7 +52,7 @@ export const useHandleGuardian = () => {
         const srm = new SocialRecoveryModule();
 
         const isGuardian = await srm.isGuardian(
-          jsonRpcNodeProvider,
+          client?.transport.url,
           safe.safeAddress,
           guardianAddress,
         );
@@ -68,7 +69,7 @@ export const useHandleGuardian = () => {
     const srm = new SocialRecoveryModule();
 
     const guardians = await srm.getGuardians(
-      jsonRpcNodeProvider,
+      client?.transport.url,
       safe.safeAddress,
     );
 

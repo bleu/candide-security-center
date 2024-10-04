@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    JSON_RPC_NODE_PROVIDER: process.env.JSON_RPC_NODE_PROVIDER,
-  },
   async headers() {
     return [
       {

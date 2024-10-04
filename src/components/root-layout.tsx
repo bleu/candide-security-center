@@ -1,37 +1,17 @@
 "use client";
+import { wagmiConfig } from "@/wagmi";
 import SafeProvider from "@safe-global/safe-apps-react-sdk";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Link from "next/link";
 import type React from "react";
-import { useState } from "react";
-import { SWRConfig, type SWRConfiguration } from "swr";
 import { WagmiProvider } from "wagmi";
 
-import { localStorageProvider } from "@/lib/localStorageProvider";
-import { wagmiConfig } from "@/wagmi";
-
-export const swrConfig: SWRConfiguration = {
-  revalidateOnFocus: false,
-  revalidateOnReconnect: true,
-  refreshInterval: 30_000,
-  shouldRetryOnError: false,
-  keepPreviousData: true,
-  provider: localStorageProvider,
-};
-
 export function RootLayout({ children }: React.PropsWithChildren) {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
     <SafeProvider loader={<SafeLoader />}>
       <WagmiProvider config={wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-          <SWRConfig value={swrConfig}>
-            <div className="flex flex-col min-h-screen size-screen justify-between">
-              <div className="size-full bg-background">{children}</div>
-            </div>
-          </SWRConfig>
-        </QueryClientProvider>
+        <div className="flex flex-col min-h-screen size-screen justify-between">
+          <div className="size-full bg-background">{children}</div>
+        </div>
       </WagmiProvider>
     </SafeProvider>
   );
